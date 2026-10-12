@@ -1,24 +1,20 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { LayoutGrid } from "lucide-react";
+import { AppShell, EmptyState, PageHeader } from "@/components/app-shell";
 
-// No head() here: the home route inherits title/description/og/twitter from
-// __root.tsx, and ships no og:image so serve-time hosting can inject the
-// project's social preview (explicit og:image or latest screenshot).
 export const Route = createFileRoute("/")({
-  component: Index,
+  head: () => ({
+    meta: [
+      { title: "Painel — ANA | A Nova Advocacia" },
+      { name: "description", content: "Visão geral das demandas e da carga de trabalho do escritório." },
+      { property: "og:title", content: "Painel — ANA | A Nova Advocacia" },
+      { property: "og:description", content: "Visão geral das demandas e da carga de trabalho do escritório." },
+    ],
+  }),
+  component: () => (
+    <AppShell>
+      <PageHeader title="Painel" description="Visão geral das demandas e da carga de trabalho do escritório." />
+      <EmptyState icon={LayoutGrid} title="Métricas ainda não disponíveis" description="As métricas serão calculadas a partir dos dados reais do banco quando o painel for implementado (Fase 6)." />
+    </AppShell>
+  ),
 });
-
-// IMPORTANT: Replace this placeholder. See ./README.md for routing conventions.
-function Index() {
-  return (
-    <div
-      className="flex min-h-screen items-center justify-center"
-      style={{ backgroundColor: "#fcfbf8" }}
-    >
-      <img
-        data-lovable-blank-page-placeholder="REMOVE_THIS"
-        src="https://cdn.gpteng.co/blank-app-v1.svg"
-        alt="Your app will live here!"
-      />
-    </div>
-  );
-}
