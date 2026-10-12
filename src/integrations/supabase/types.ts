@@ -14,16 +14,501 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      clients: {
+        Row: {
+          created_at: string
+          document: string | null
+          email: string | null
+          id: string
+          name: string
+          notes: string | null
+          office_id: string
+          phone: string | null
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          document?: string | null
+          email?: string | null
+          id?: string
+          name: string
+          notes?: string | null
+          office_id: string
+          phone?: string | null
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          document?: string | null
+          email?: string | null
+          id?: string
+          name?: string
+          notes?: string | null
+          office_id?: string
+          phone?: string | null
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "clients_office_id_fkey"
+            columns: ["office_id"]
+            isOneToOne: false
+            referencedRelation: "offices"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      demand_history: {
+        Row: {
+          action: string
+          actor_id: string | null
+          created_at: string
+          demand_id: string
+          details: Json | null
+          id: number
+          office_id: string
+          task_id: string | null
+        }
+        Insert: {
+          action: string
+          actor_id?: string | null
+          created_at?: string
+          demand_id: string
+          details?: Json | null
+          id?: never
+          office_id: string
+          task_id?: string | null
+        }
+        Update: {
+          action?: string
+          actor_id?: string | null
+          created_at?: string
+          demand_id?: string
+          details?: Json | null
+          id?: never
+          office_id?: string
+          task_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "demand_history_actor_id_fkey"
+            columns: ["actor_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "demand_history_demand_id_fkey"
+            columns: ["demand_id"]
+            isOneToOne: false
+            referencedRelation: "demands"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "demand_history_office_id_fkey"
+            columns: ["office_id"]
+            isOneToOne: false
+            referencedRelation: "offices"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "demand_history_task_id_fkey"
+            columns: ["task_id"]
+            isOneToOne: false
+            referencedRelation: "tasks"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      demands: {
+        Row: {
+          cancel_reason: string | null
+          client_id: string
+          created_at: string
+          created_by: string | null
+          description: string | null
+          due_date: string | null
+          id: string
+          office_id: string
+          priority: Database["public"]["Enums"]["priority"]
+          responsible_id: string | null
+          status: Database["public"]["Enums"]["demand_status"]
+          team_id: string | null
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          cancel_reason?: string | null
+          client_id: string
+          created_at?: string
+          created_by?: string | null
+          description?: string | null
+          due_date?: string | null
+          id?: string
+          office_id: string
+          priority?: Database["public"]["Enums"]["priority"]
+          responsible_id?: string | null
+          status?: Database["public"]["Enums"]["demand_status"]
+          team_id?: string | null
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          cancel_reason?: string | null
+          client_id?: string
+          created_at?: string
+          created_by?: string | null
+          description?: string | null
+          due_date?: string | null
+          id?: string
+          office_id?: string
+          priority?: Database["public"]["Enums"]["priority"]
+          responsible_id?: string | null
+          status?: Database["public"]["Enums"]["demand_status"]
+          team_id?: string | null
+          title?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "demands_client_id_fkey"
+            columns: ["client_id"]
+            isOneToOne: false
+            referencedRelation: "clients"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "demands_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "demands_office_id_fkey"
+            columns: ["office_id"]
+            isOneToOne: false
+            referencedRelation: "offices"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "demands_responsible_id_fkey"
+            columns: ["responsible_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "demands_team_id_fkey"
+            columns: ["team_id"]
+            isOneToOne: false
+            referencedRelation: "teams"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      office_members: {
+        Row: {
+          active: boolean
+          created_at: string
+          id: string
+          office_id: string
+          role: Database["public"]["Enums"]["office_role"]
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          active?: boolean
+          created_at?: string
+          id?: string
+          office_id: string
+          role: Database["public"]["Enums"]["office_role"]
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          active?: boolean
+          created_at?: string
+          id?: string
+          office_id?: string
+          role?: Database["public"]["Enums"]["office_role"]
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "office_members_office_id_fkey"
+            columns: ["office_id"]
+            isOneToOne: false
+            referencedRelation: "offices"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "office_members_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      offices: {
+        Row: {
+          created_at: string
+          id: string
+          name: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          name: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          name?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      profiles: {
+        Row: {
+          created_at: string
+          email: string
+          full_name: string
+          id: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          email: string
+          full_name: string
+          id: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          email?: string
+          full_name?: string
+          id?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      tasks: {
+        Row: {
+          assignee_id: string
+          created_at: string
+          demand_id: string
+          description: string | null
+          due_date: string
+          id: string
+          office_id: string
+          required: boolean
+          review_comment: string | null
+          reviewed_at: string | null
+          reviewed_by: string | null
+          status: Database["public"]["Enums"]["task_status"]
+          submission_note: string | null
+          submitted_at: string | null
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          assignee_id: string
+          created_at?: string
+          demand_id: string
+          description?: string | null
+          due_date: string
+          id?: string
+          office_id: string
+          required?: boolean
+          review_comment?: string | null
+          reviewed_at?: string | null
+          reviewed_by?: string | null
+          status?: Database["public"]["Enums"]["task_status"]
+          submission_note?: string | null
+          submitted_at?: string | null
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          assignee_id?: string
+          created_at?: string
+          demand_id?: string
+          description?: string | null
+          due_date?: string
+          id?: string
+          office_id?: string
+          required?: boolean
+          review_comment?: string | null
+          reviewed_at?: string | null
+          reviewed_by?: string | null
+          status?: Database["public"]["Enums"]["task_status"]
+          submission_note?: string | null
+          submitted_at?: string | null
+          title?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "tasks_assignee_id_fkey"
+            columns: ["assignee_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "tasks_demand_id_fkey"
+            columns: ["demand_id"]
+            isOneToOne: false
+            referencedRelation: "demands"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "tasks_office_id_fkey"
+            columns: ["office_id"]
+            isOneToOne: false
+            referencedRelation: "offices"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "tasks_reviewed_by_fkey"
+            columns: ["reviewed_by"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      team_members: {
+        Row: {
+          created_at: string
+          id: string
+          team_id: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          team_id: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          team_id?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "team_members_team_id_fkey"
+            columns: ["team_id"]
+            isOneToOne: false
+            referencedRelation: "teams"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "team_members_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      teams: {
+        Row: {
+          created_at: string
+          id: string
+          name: string
+          office_id: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          name: string
+          office_id: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          name?: string
+          office_id?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "teams_office_id_fkey"
+            columns: ["office_id"]
+            isOneToOne: false
+            referencedRelation: "offices"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      assign_task: {
+        Args: { _assignee_id: string; _due_date: string; _task_id: string }
+        Returns: undefined
+      }
+      can_view_demand: { Args: { _demand_id: string }; Returns: boolean }
+      cancel_demand: {
+        Args: { _demand_id: string; _reason: string }
+        Returns: undefined
+      }
+      has_office_role: {
+        Args: {
+          _office_id: string
+          _roles: Database["public"]["Enums"]["office_role"][]
+        }
+        Returns: boolean
+      }
+      is_office_member: { Args: { _office_id: string }; Returns: boolean }
+      office_role_of: {
+        Args: { _office_id: string }
+        Returns: Database["public"]["Enums"]["office_role"]
+      }
+      review_task: {
+        Args: { _approve: boolean; _comment?: string; _task_id: string }
+        Returns: undefined
+      }
+      set_demand_status: {
+        Args: {
+          _demand_id: string
+          _status: Database["public"]["Enums"]["demand_status"]
+        }
+        Returns: undefined
+      }
+      start_task: { Args: { _task_id: string }; Returns: undefined }
+      submit_task: {
+        Args: { _note?: string; _task_id: string }
+        Returns: undefined
+      }
     }
     Enums: {
-      [_ in never]: never
+      demand_status:
+        | "nova"
+        | "em_andamento"
+        | "em_revisao"
+        | "concluida"
+        | "cancelada"
+      office_role: "admin" | "coordinator" | "lawyer"
+      priority: "baixa" | "media" | "alta" | "urgente"
+      task_status:
+        | "pendente"
+        | "em_andamento"
+        | "em_revisao"
+        | "correcao"
+        | "concluida"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -150,6 +635,23 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      demand_status: [
+        "nova",
+        "em_andamento",
+        "em_revisao",
+        "concluida",
+        "cancelada",
+      ],
+      office_role: ["admin", "coordinator", "lawyer"],
+      priority: ["baixa", "media", "alta", "urgente"],
+      task_status: [
+        "pendente",
+        "em_andamento",
+        "em_revisao",
+        "correcao",
+        "concluida",
+      ],
+    },
   },
 } as const

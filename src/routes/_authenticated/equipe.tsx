@@ -2,7 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { Users } from "lucide-react";
 import { AppShell, EmptyState, PageHeader } from "@/components/app-shell";
 
-export const Route = createFileRoute("/equipe")({
+export const Route = createFileRoute("/_authenticated/equipe")({
   head: () => ({
     meta: [
       { title: "Equipe — ANA" },

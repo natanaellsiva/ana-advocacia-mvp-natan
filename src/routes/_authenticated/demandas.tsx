@@ -2,7 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { FolderKanban } from "lucide-react";
 import { AppShell, EmptyState, PageHeader } from "@/components/app-shell";
 
-export const Route = createFileRoute("/demandas")({
+export const Route = createFileRoute("/_authenticated/demandas")({
   head: () => ({
     meta: [
       { title: "Demandas — ANA" },

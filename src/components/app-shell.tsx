@@ -1,9 +1,12 @@
-import { Link } from "@tanstack/react-router";
+import { Link, useNavigate } from "@tanstack/react-router";
+import { useQueryClient } from "@tanstack/react-query";
 import { useState, type ReactNode } from "react";
-import { Building2, FolderKanban, LayoutGrid, Menu, Scale, UserCircle2, Users, X } from "lucide-react";
+import { Building2, FolderKanban, LayoutGrid, LogOut, Menu, Scale, UserCircle2, Users, X } from "lucide-react";
+import { supabase } from "@/integrations/supabase/client";
+import { roleLabel, useCurrentMember } from "@/hooks/use-current-member";
 
 const nav = [
-  { to: "/", label: "Painel", icon: LayoutGrid },
+  { to: "/painel", label: "Painel", icon: LayoutGrid },
   { to: "/demandas", label: "Demandas", icon: FolderKanban },
   { to: "/clientes", label: "Clientes", icon: Building2 },
   { to: "/equipe", label: "Equipe", icon: Users },
@@ -17,7 +20,7 @@ function NavLinks({ onNavigate }: { onNavigate?: () => void }) {
           key={to}
           to={to}
           onClick={onNavigate}
-          activeOptions={{ exact: to === "/" }}
+          activeOptions={{ exact: true }}
           className="flex min-h-11 items-center gap-3 rounded-field px-3 text-sm text-muted-foreground transition-colors hover:bg-elevated hover:text-foreground"
           activeProps={{ className: "bg-accent !text-primary font-medium" }}
         >
@@ -45,6 +48,15 @@ function Brand() {
 
 export function AppShell({ children }: { children: ReactNode }) {
   const [open, setOpen] = useState(false);
+  const member = useCurrentMember();
+  const queryClient = useQueryClient();
+  const navigate = useNavigate();
+  async function signOut() {
+    await queryClient.cancelQueries();
+    queryClient.clear();
+    await supabase.auth.signOut();
+    navigate({ to: "/auth", replace: true });
+  }
   return (
     <div className="flex min-h-screen w-full bg-deepest">
       <aside className="hidden w-60 shrink-0 flex-col border-r bg-deepest md:flex">
@@ -73,13 +85,29 @@ export function AppShell({ children }: { children: ReactNode }) {
             <button onClick={() => setOpen(true)} aria-label="Abrir menu" className="grid h-11 w-11 place-items-center rounded-field hover:bg-elevated md:hidden">
               <Menu className="h-5 w-5" />
             </button>
-            <p className="truncate text-sm text-muted-foreground">Escritório —</p>
+            <p className="truncate text-sm text-muted-foreground">
+              {member.isLoading ? "Carregando…" : member.data?.officeName ?? "Sem escritório vinculado"}
+            </p>
           </div>
-          <button aria-label="Conta do usuário" className="grid h-11 w-11 place-items-center rounded-full text-muted-foreground hover:bg-elevated hover:text-foreground">
-            <UserCircle2 className="h-5 w-5" />
-          </button>
+          <div className="flex min-w-0 items-center gap-3">
+            <div className="hidden min-w-0 text-right sm:block">
+              <p className="truncate text-sm font-medium">{member.data?.fullName}</p>
+              <p className="truncate text-xs text-muted-foreground">{member.data?.role ? roleLabel[member.data.role] : "Sem perfil de acesso"}</p>
+            </div>
+            <button onClick={signOut} aria-label="Sair" title="Sair" className="grid h-11 w-11 place-items-center rounded-full text-muted-foreground hover:bg-elevated hover:text-foreground">
+              <LogOut className="h-5 w-5" />
+            </button>
+          </div>
         </header>
-        <main className="flex-1 px-4 py-8 md:px-8">{children}</main>
+        <main className="flex-1 px-4 py-8 md:px-8">
+          {member.data && !member.data.officeId ? (
+            <EmptyState icon={UserCircle2} title="Acesso pendente" description="Sua conta ainda não está vinculada a um escritório. Peça ao administrador para adicioná-lo à equipe." />
+          ) : member.isError ? (
+            <EmptyState icon={UserCircle2} title="Não foi possível carregar seu perfil" description="Tente recarregar a página." />
+          ) : (
+            children
+          )}
+        </main>
       </div>
     </div>
   );

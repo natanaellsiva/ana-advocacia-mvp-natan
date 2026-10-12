@@ -1,20 +1,19 @@
-import { createFileRoute } from "@tanstack/react-router";
-import { LayoutGrid } from "lucide-react";
-import { AppShell, EmptyState, PageHeader } from "@/components/app-shell";
+import { createFileRoute, redirect } from "@tanstack/react-router";
+import { supabase } from "@/integrations/supabase/client";
 
 export const Route = createFileRoute("/")({
+  ssr: false,
   head: () => ({
     meta: [
-      { title: "Painel — ANA | A Nova Advocacia" },
-      { name: "description", content: "Visão geral das demandas e da carga de trabalho do escritório." },
-      { property: "og:title", content: "Painel — ANA | A Nova Advocacia" },
-      { property: "og:description", content: "Visão geral das demandas e da carga de trabalho do escritório." },
+      { title: "ANA — A Nova Advocacia" },
+      { name: "description", content: "Gestão de demandas e tarefas para escritórios de advocacia." },
+      { property: "og:title", content: "ANA — A Nova Advocacia" },
+      { property: "og:description", content: "Gestão de demandas e tarefas para escritórios de advocacia." },
     ],
   }),
-  component: () => (
-    <AppShell>
-      <PageHeader title="Painel" description="Visão geral das demandas e da carga de trabalho do escritório." />
-      <EmptyState icon={LayoutGrid} title="Métricas ainda não disponíveis" description="As métricas serão calculadas a partir dos dados reais do banco quando o painel for implementado (Fase 6)." />
-    </AppShell>
-  ),
+  beforeLoad: async () => {
+    const { data } = await supabase.auth.getUser();
+    throw redirect({ to: data.user ? "/painel" : "/auth", replace: true });
+  },
+  component: () => null,
 });
