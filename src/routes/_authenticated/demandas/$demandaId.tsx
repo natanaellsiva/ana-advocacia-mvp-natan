@@ -20,6 +20,8 @@ export const Route = createFileRoute("/_authenticated/demandas/$demandaId")({
       { name: "description", content: "Tarefas, revisões e histórico da demanda." },
       { property: "og:title", content: "Detalhe da demanda — ANA" },
       { property: "og:description", content: "Tarefas, revisões e histórico da demanda." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
     ],
   }),
   component: () => (

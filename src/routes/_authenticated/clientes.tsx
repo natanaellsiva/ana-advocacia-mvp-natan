@@ -15,6 +15,8 @@ export const Route = createFileRoute("/_authenticated/clientes")({
       { name: "description", content: "Cadastro de clientes do escritório." },
       { property: "og:title", content: "Clientes — ANA" },
       { property: "og:description", content: "Cadastro de clientes do escritório." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
     ],
   }),
   component: () => (

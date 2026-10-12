@@ -18,6 +18,8 @@ export const Route = createFileRoute("/_authenticated/painel")({
       { name: "description", content: "Visão geral das demandas e da carga de trabalho do escritório." },
       { property: "og:title", content: "Painel — ANA | A Nova Advocacia" },
       { property: "og:description", content: "Visão geral das demandas e da carga de trabalho do escritório." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
     ],
   }),
   component: () => (

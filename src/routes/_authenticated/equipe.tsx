@@ -18,6 +18,8 @@ export const Route = createFileRoute("/_authenticated/equipe")({
       { name: "description", content: "Membros da equipe e papéis no escritório." },
       { property: "og:title", content: "Equipe — ANA" },
       { property: "og:description", content: "Membros da equipe e papéis no escritório." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
     ],
   }),
   component: () => (
