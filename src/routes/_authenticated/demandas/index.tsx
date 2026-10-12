@@ -145,12 +145,16 @@ function DemandForm({ officeId, userId, onDone }: { officeId: string; userId: st
   const [err, setErr] = useState<string | null>(null);
   const m = useMutation({
     mutationFn: async () => {
-      const { data, error } = await supabase.from("demands").insert({
-        office_id: officeId, created_by: userId, title: f.title.trim(), client_id: f.client_id, priority: f.priority,
+      // ID is generated here and the row is NOT read back in the same request:
+      // the SELECT policy (can_view_demand) can't see a row inserted in the same
+      // statement, so `.select()` after insert fails RLS even for admins.
+      const id = crypto.randomUUID();
+      const { error } = await supabase.from("demands").insert({
+        id, office_id: officeId, created_by: userId, title: f.title.trim(), client_id: f.client_id, priority: f.priority,
         responsible_id: f.responsible_id || null, team_id: f.team_id || null, due_date: f.due_date || null, description: f.description.trim() || null,
-      }).select("id").single();
+      });
       if (error) throw error;
-      return data.id;
+      return id;
     },
     onSuccess: (id) => {
       qc.invalidateQueries({ queryKey: ["demands", officeId] });
