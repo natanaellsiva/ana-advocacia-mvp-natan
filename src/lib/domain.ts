@@ -44,7 +44,7 @@ export const demandTone: Record<DemandStatus, string> = {
   nova: tones.neutral, em_andamento: tones.primary, em_revisao: tones.warning, concluida: tones.success, cancelada: tones.danger,
 };
 export const taskTone: Record<TaskStatus, string> = {
-  pendente: tones.neutral, em_andamento: tones.primary, em_revisao: tones.warning, correcao: tones.danger, concluida: tones.success,
+  pendente: "border border-muted-foreground bg-card text-foreground", em_andamento: tones.primary, em_revisao: tones.warning, correcao: tones.danger, concluida: tones.success,
 };
 export const priorityTone: Record<Priority, string> = {
   baixa: tones.neutral, media: tones.primary, alta: tones.warning, urgente: tones.danger,
