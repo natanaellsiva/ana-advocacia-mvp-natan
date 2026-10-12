@@ -21,7 +21,7 @@ function friendlyError(message: string) {
 export const Route = createFileRoute("/auth")({
   ssr: false,
   validateSearch: (s: Record<string, unknown>): Search => ({
-    redirect: typeof s.redirect === "string" ? s.redirect : undefined,
+    redirect: typeof s["redirect"] === "string" ? s["redirect"] : undefined,
   }),
   beforeLoad: async ({ search }) => {
     const { data } = await supabase.auth.getUser();
