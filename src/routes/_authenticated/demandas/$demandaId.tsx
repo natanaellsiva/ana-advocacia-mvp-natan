@@ -55,7 +55,7 @@ function DemandDetail() {
 
   if (isLoading) return <LoadingBlock />;
   if (error) return <EmptyState icon={FolderKanban} title="Erro ao carregar a demanda" description={friendlyDbError(error)} />;
-  const d = data?.demand as (typeof data extends { demand: infer D } ? D : never) | null;
+  const d = data?.demand;
   if (!data || !d) return <EmptyState icon={FolderKanban} title="Demanda não encontrada" description="Ela não existe ou você não tem acesso a ela." />;
 
   const tasks = data.tasks as Task[];
@@ -162,7 +162,7 @@ function TaskItem({ t, me, locked, onChange }: { t: Task; me: ReturnType<typeof 
     mutationFn: async (action: "start" | "submit" | "approve" | "reject" | "delete") => {
       const res =
         action === "start" ? await supabase.rpc("start_task", { _task_id: t.id })
-        : action === "submit" ? await supabase.rpc("submit_task", { _task_id: t.id, _note: note.trim() || undefined })
+        : action === "submit" ? await supabase.rpc("submit_task", { _task_id: t.id, ...(note.trim() && { _note: note.trim() }) })
         : action === "approve" ? await supabase.rpc("review_task", { _task_id: t.id, _approve: true })
         : action === "reject" ? await supabase.rpc("review_task", { _task_id: t.id, _approve: false, _comment: note.trim() })
         : await supabase.from("tasks").delete().eq("id", t.id);
@@ -208,7 +208,7 @@ function TaskItem({ t, me, locked, onChange }: { t: Task; me: ReturnType<typeof 
         )}
       </div>
       {mode && (
-        <form className="mt-4 space-y-3" onSubmit={(e) => { e.preventDefault(); if (mode === "reject" && !note.trim()) return toast.error("Informe o que precisa ser corrigido."); run.mutate(mode); }}>
+        <form className="mt-4 space-y-3" onSubmit={(e) => { e.preventDefault(); if (mode === "reject" && !note.trim()) { toast.error("Informe o que precisa ser corrigido."); return; } run.mutate(mode); }}>
           <label htmlFor={`note-${t.id}`} className="text-sm font-medium">{mode === "submit" ? "Nota de entrega (opcional)" : "O que precisa ser corrigido? *"}</label>
           <textarea id={`note-${t.id}`} maxLength={2000} className={textareaClass} value={note} onChange={(e) => setNote(e.target.value)} />
           <div className="flex gap-2">

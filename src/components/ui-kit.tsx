@@ -16,7 +16,7 @@ export function Badge({ className, children }: { className: string; children: Re
   return <span className={cn("inline-flex items-center whitespace-nowrap rounded-full px-2.5 py-0.5 text-xs font-medium", className)}>{children}</span>;
 }
 
-export function Field({ label, htmlFor, children, hint }: { label: string; htmlFor: string; children: ReactNode; hint?: string }) {
+export function Field({ label, htmlFor, children, hint }: { label: string; htmlFor: string; children: ReactNode; hint?: string | undefined }) {
   return (
     <div className="space-y-1.5">
       <label htmlFor={htmlFor} className="text-sm font-medium">{label}</label>
