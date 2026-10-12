@@ -7,6 +7,7 @@ import { AppShell, EmptyState } from "@/components/app-shell";
 import { Badge, Field, FormError, LoadingBlock, Modal, useMe } from "@/components/ui-kit";
 import { supabase } from "@/integrations/supabase/client";
 import { cn } from "@/lib/utils";
+import type { Tables } from "@/integrations/supabase/types";
 import {
   btnGhost, demandQuery, demandStatusLabel, demandTone, fieldClass, formatDate, formatDateTime, friendlyDbError, historyLabel,
   isOverdue, membersQuery, priorityLabel, priorityTone, taskStatusLabel, taskTone, textareaClass, type DemandStatus, type TaskStatus,
@@ -27,6 +28,8 @@ export const Route = createFileRoute("/_authenticated/demandas/$demandaId")({
     </AppShell>
   ),
 });
+
+type DemandFull = Tables<"demands"> & { clients: { name: string } | null; teams: { name: string } | null; responsible: { full_name: string } | null };
 
 type Task = {
   id: string; title: string; description: string | null; status: TaskStatus; due_date: string; required: boolean;
@@ -55,7 +58,7 @@ function DemandDetail() {
 
   if (isLoading) return <LoadingBlock />;
   if (error) return <EmptyState icon={FolderKanban} title="Erro ao carregar a demanda" description={friendlyDbError(error)} />;
-  const d = data?.demand;
+  const d = data?.demand as unknown as DemandFull | null;
   if (!data || !d) return <EmptyState icon={FolderKanban} title="Demanda não encontrada" description="Ela não existe ou você não tem acesso a ela." />;
 
   const tasks = data.tasks as Task[];
