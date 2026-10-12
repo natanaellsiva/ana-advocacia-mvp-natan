@@ -16,6 +16,7 @@ import { Route as AuthenticatedClientesRouteImport } from './routes/_authenticat
 import { Route as AuthenticatedEquipeRouteImport } from './routes/_authenticated/equipe'
 import { Route as AuthenticatedPainelRouteImport } from './routes/_authenticated/painel'
 import { Route as AuthenticatedDemandasIndexRouteImport } from './routes/_authenticated/demandas/index'
+import { Route as AuthenticatedDemandasDemandaIdRouteImport } from './routes/_authenticated/demandas/$demandaId'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -52,6 +53,12 @@ const AuthenticatedDemandasIndexRoute =
     path: '/demandas/',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
+const AuthenticatedDemandasDemandaIdRoute =
+  AuthenticatedDemandasDemandaIdRouteImport.update({
+    id: '/demandas/$demandaId',
+    path: '/demandas/$demandaId',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -59,6 +66,7 @@ export interface FileRoutesByFullPath {
   '/clientes': typeof AuthenticatedClientesRoute
   '/equipe': typeof AuthenticatedEquipeRoute
   '/painel': typeof AuthenticatedPainelRoute
+  '/demandas/$demandaId': typeof AuthenticatedDemandasDemandaIdRoute
   '/demandas/': typeof AuthenticatedDemandasIndexRoute
 }
 export interface FileRoutesByTo {
@@ -67,6 +75,7 @@ export interface FileRoutesByTo {
   '/clientes': typeof AuthenticatedClientesRoute
   '/equipe': typeof AuthenticatedEquipeRoute
   '/painel': typeof AuthenticatedPainelRoute
+  '/demandas/$demandaId': typeof AuthenticatedDemandasDemandaIdRoute
   '/demandas': typeof AuthenticatedDemandasIndexRoute
 }
 export interface FileRoutesById {
@@ -77,13 +86,28 @@ export interface FileRoutesById {
   '/_authenticated/clientes': typeof AuthenticatedClientesRoute
   '/_authenticated/equipe': typeof AuthenticatedEquipeRoute
   '/_authenticated/painel': typeof AuthenticatedPainelRoute
+  '/_authenticated/demandas/$demandaId': typeof AuthenticatedDemandasDemandaIdRoute
   '/_authenticated/demandas/': typeof AuthenticatedDemandasIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/auth' | '/clientes' | '/equipe' | '/painel' | '/demandas/'
+  fullPaths:
+    | '/'
+    | '/auth'
+    | '/clientes'
+    | '/equipe'
+    | '/painel'
+    | '/demandas/$demandaId'
+    | '/demandas/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/auth' | '/clientes' | '/equipe' | '/painel' | '/demandas'
+  to:
+    | '/'
+    | '/auth'
+    | '/clientes'
+    | '/equipe'
+    | '/painel'
+    | '/demandas/$demandaId'
+    | '/demandas'
   id:
     | '__root__'
     | '/'
@@ -92,6 +116,7 @@ export interface FileRouteTypes {
     | '/_authenticated/clientes'
     | '/_authenticated/equipe'
     | '/_authenticated/painel'
+    | '/_authenticated/demandas/$demandaId'
     | '/_authenticated/demandas/'
   fileRoutesById: FileRoutesById
 }
@@ -152,6 +177,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedDemandasIndexRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/demandas/$demandaId': {
+      id: '/_authenticated/demandas/$demandaId'
+      path: '/demandas/$demandaId'
+      fullPath: '/demandas/$demandaId'
+      preLoaderRoute: typeof AuthenticatedDemandasDemandaIdRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
   }
 }
 
@@ -159,6 +191,7 @@ interface AuthenticatedRouteRouteChildren {
   AuthenticatedClientesRoute: typeof AuthenticatedClientesRoute
   AuthenticatedEquipeRoute: typeof AuthenticatedEquipeRoute
   AuthenticatedPainelRoute: typeof AuthenticatedPainelRoute
+  AuthenticatedDemandasDemandaIdRoute: typeof AuthenticatedDemandasDemandaIdRoute
   AuthenticatedDemandasIndexRoute: typeof AuthenticatedDemandasIndexRoute
 }
 
@@ -166,6 +199,7 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedClientesRoute: AuthenticatedClientesRoute,
   AuthenticatedEquipeRoute: AuthenticatedEquipeRoute,
   AuthenticatedPainelRoute: AuthenticatedPainelRoute,
+  AuthenticatedDemandasDemandaIdRoute: AuthenticatedDemandasDemandaIdRoute,
   AuthenticatedDemandasIndexRoute: AuthenticatedDemandasIndexRoute,
 }
 
