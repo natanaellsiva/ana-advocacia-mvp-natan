@@ -46,6 +46,7 @@ function DemandDetail() {
   const refresh = () => {
     qc.invalidateQueries({ queryKey: ["demand", demandaId] });
     qc.invalidateQueries({ queryKey: ["demands", me.officeId] });
+    qc.invalidateQueries({ queryKey: ["office-tasks", me.officeId] });
   };
   const setStatus = useMutation({
     mutationFn: async (s: DemandStatus) => {
