@@ -9,104 +9,109 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as IndexRouteImport } from './routes/index'
-import { Route as ClientesRouteImport } from './routes/clientes'
-import { Route as DemandasRouteImport } from './routes/demandas'
-import { Route as EquipeRouteImport } from './routes/equipe'
+import { Route as AuthenticatedClientesRouteImport } from './routes/_authenticated/clientes'
+import { Route as AuthenticatedDemandasRouteImport } from './routes/_authenticated/demandas'
+import { Route as AuthenticatedEquipeRouteImport } from './routes/_authenticated/equipe'
+import { Route as AuthenticatedPainelRouteImport } from './routes/_authenticated/painel'
 
-const IndexRoute = IndexRouteImport.update({
-  id: '/',
-  path: '/',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ClientesRoute = ClientesRouteImport.update({
-  id: '/clientes',
+const AuthenticatedClientesRoute = AuthenticatedClientesRouteImport.update({
+  id: '/_authenticated/clientes',
   path: '/clientes',
   getParentRoute: () => rootRouteImport,
 } as any)
-const DemandasRoute = DemandasRouteImport.update({
-  id: '/demandas',
+const AuthenticatedDemandasRoute = AuthenticatedDemandasRouteImport.update({
+  id: '/_authenticated/demandas',
   path: '/demandas',
   getParentRoute: () => rootRouteImport,
 } as any)
-const EquipeRoute = EquipeRouteImport.update({
-  id: '/equipe',
+const AuthenticatedEquipeRoute = AuthenticatedEquipeRouteImport.update({
+  id: '/_authenticated/equipe',
   path: '/equipe',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthenticatedPainelRoute = AuthenticatedPainelRouteImport.update({
+  id: '/_authenticated/painel',
+  path: '/painel',
   getParentRoute: () => rootRouteImport,
 } as any)
 
 export interface FileRoutesByFullPath {
-  '/': typeof IndexRoute
-  '/clientes': typeof ClientesRoute
-  '/demandas': typeof DemandasRoute
-  '/equipe': typeof EquipeRoute
+  '/clientes': typeof AuthenticatedClientesRoute
+  '/demandas': typeof AuthenticatedDemandasRoute
+  '/equipe': typeof AuthenticatedEquipeRoute
+  '/painel': typeof AuthenticatedPainelRoute
 }
 export interface FileRoutesByTo {
-  '/': typeof IndexRoute
-  '/clientes': typeof ClientesRoute
-  '/demandas': typeof DemandasRoute
-  '/equipe': typeof EquipeRoute
+  '/clientes': typeof AuthenticatedClientesRoute
+  '/demandas': typeof AuthenticatedDemandasRoute
+  '/equipe': typeof AuthenticatedEquipeRoute
+  '/painel': typeof AuthenticatedPainelRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
-  '/': typeof IndexRoute
-  '/clientes': typeof ClientesRoute
-  '/demandas': typeof DemandasRoute
-  '/equipe': typeof EquipeRoute
+  '/_authenticated/clientes': typeof AuthenticatedClientesRoute
+  '/_authenticated/demandas': typeof AuthenticatedDemandasRoute
+  '/_authenticated/equipe': typeof AuthenticatedEquipeRoute
+  '/_authenticated/painel': typeof AuthenticatedPainelRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/clientes' | '/demandas' | '/equipe'
+  fullPaths: '/clientes' | '/demandas' | '/equipe' | '/painel'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/clientes' | '/demandas' | '/equipe'
-  id: '__root__' | '/' | '/clientes' | '/demandas' | '/equipe'
+  to: '/clientes' | '/demandas' | '/equipe' | '/painel'
+  id:
+    | '__root__'
+    | '/_authenticated/clientes'
+    | '/_authenticated/demandas'
+    | '/_authenticated/equipe'
+    | '/_authenticated/painel'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
-  IndexRoute: typeof IndexRoute
-  ClientesRoute: typeof ClientesRoute
-  DemandasRoute: typeof DemandasRoute
-  EquipeRoute: typeof EquipeRoute
+  AuthenticatedClientesRoute: typeof AuthenticatedClientesRoute
+  AuthenticatedDemandasRoute: typeof AuthenticatedDemandasRoute
+  AuthenticatedEquipeRoute: typeof AuthenticatedEquipeRoute
+  AuthenticatedPainelRoute: typeof AuthenticatedPainelRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/': {
-      id: '/'
-      path: '/'
-      fullPath: '/'
-      preLoaderRoute: typeof IndexRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/clientes': {
-      id: '/clientes'
+    '/_authenticated/clientes': {
+      id: '/_authenticated/clientes'
       path: '/clientes'
       fullPath: '/clientes'
-      preLoaderRoute: typeof ClientesRouteImport
+      preLoaderRoute: typeof AuthenticatedClientesRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/demandas': {
-      id: '/demandas'
+    '/_authenticated/demandas': {
+      id: '/_authenticated/demandas'
       path: '/demandas'
       fullPath: '/demandas'
-      preLoaderRoute: typeof DemandasRouteImport
+      preLoaderRoute: typeof AuthenticatedDemandasRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/equipe': {
-      id: '/equipe'
+    '/_authenticated/equipe': {
+      id: '/_authenticated/equipe'
       path: '/equipe'
       fullPath: '/equipe'
-      preLoaderRoute: typeof EquipeRouteImport
+      preLoaderRoute: typeof AuthenticatedEquipeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_authenticated/painel': {
+      id: '/_authenticated/painel'
+      path: '/painel'
+      fullPath: '/painel'
+      preLoaderRoute: typeof AuthenticatedPainelRouteImport
       parentRoute: typeof rootRouteImport
     }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
-  IndexRoute: IndexRoute,
-  ClientesRoute: ClientesRoute,
-  DemandasRoute: DemandasRoute,
-  EquipeRoute: EquipeRoute,
+  AuthenticatedClientesRoute: AuthenticatedClientesRoute,
+  AuthenticatedDemandasRoute: AuthenticatedDemandasRoute,
+  AuthenticatedEquipeRoute: AuthenticatedEquipeRoute,
+  AuthenticatedPainelRoute: AuthenticatedPainelRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
