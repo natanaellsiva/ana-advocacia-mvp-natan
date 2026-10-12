@@ -171,13 +171,13 @@ function TaskList({ title, empty, tasks }: { title: string; empty: ReactNode; ta
               <Link
                 to="/demandas/$demandaId"
                 params={{ demandaId: t.demand_id }}
-                className="grid min-w-0 grid-cols-[minmax(0,1fr)_auto] items-center gap-3 rounded-field bg-elevated px-4 py-2.5 hover:bg-elevated/70"
+                className="grid min-h-11 min-w-0 grid-cols-1 gap-x-3 gap-y-1.5 rounded-field bg-elevated px-4 py-2.5 hover:bg-elevated/70 lg:grid-cols-[minmax(0,1fr)_auto] lg:items-center"
               >
                 <span className="min-w-0">
                   <span className="block truncate text-sm font-medium">{t.title}</span>
                   <span className="block truncate text-xs text-muted-foreground">{t.demands?.title} · {t.assignee?.full_name}</span>
                 </span>
-                <span className="flex shrink-0 flex-col items-end gap-1">
+                <span className="flex shrink-0 items-center justify-between gap-2 lg:flex-col lg:items-end lg:gap-1">
                   <Badge className={taskTone[t.status]}>{taskStatusLabel[t.status]}</Badge>
                   <span className={cn("text-xs", t.status !== "concluida" && isOverdue(t.due_date) ? "text-destructive" : "text-muted-foreground")}>{formatDate(t.due_date)}</span>
                 </span>
