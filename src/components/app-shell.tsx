@@ -100,7 +100,9 @@ export function AppShell({ children }: { children: ReactNode }) {
           </div>
         </header>
         <main className="flex-1 px-4 py-8 md:px-8">
-          {member.data && !member.data.officeId ? (
+          {member.isLoading || !member.data && !member.isError ? (
+            <p className="text-sm text-muted-foreground">Carregando…</p>
+          ) : member.data && !member.data.officeId ? (
             <EmptyState icon={UserCircle2} title="Acesso pendente" description="Sua conta ainda não está vinculada a um escritório. Peça ao administrador para adicioná-lo à equipe." />
           ) : member.isError ? (
             <EmptyState icon={UserCircle2} title="Não foi possível carregar seu perfil" description="Tente recarregar a página." />
