@@ -37,7 +37,28 @@ Preencha `.env.local` conforme abaixo; abra o endereço exibido pelo Vite. Tamb�
 
 Nunca use a chave `service_role` em variáveis `VITE_*`, código do navegador, README ou credenciais de demonstração públicas. No Lovable, mantenha a integração existente; não crie outro Supabase. Para publicação, o ambiente do servidor precisa receber suas variáveis em tempo de execução, não apenas durante a compilação.
 
-**Atenção antes do GitHub:** o arquivo `.env` gerado pela integração está versionado neste ambiente; seu conteúdo não foi inspecionado nesta entrega. A configuração protegida de `.gitignore` não pôde ser alterada aqui. Revise esse arquivo antes de tornar o repositório público: somente URL, referência e chave pública podem ser divulgadas. Remova qualquer segredo privado do versionamento e, se já foi publicado, rotacione-o. `.env.local` é ignorado pelo padrão `*.local`; o modelo `.env.example` não contém valores reais.
+**Bloqueio antes do GitHub:** a verificação confirmou que `.env` continua rastreado. O `.gitignore` é protegido contra alterações neste ambiente; a tentativa de acrescentar regras foi bloqueada. Nenhum conteúdo de `.env` foi lido ou reproduzido. Não sincronize nem torne o repositório público antes de resolver isso em uma cópia local autorizada.
+
+Acrescente ao `.gitignore`:
+
+```gitignore
+# Configurações reais ficam fora do repositório
+.env
+.env.*
+!.env.example
+```
+
+Depois, na sua cópia local, execute:
+
+```bash
+git rm --cached -- .env
+git add .gitignore
+git commit -m "Protege arquivos de ambiente"
+git ls-files -- .env
+git check-ignore --no-index .env .env.local
+```
+
+O primeiro comando preserva o arquivo local e remove seu rastreamento no próximo commit. A consulta `git ls-files -- .env` deve retornar vazia; a última consulta deve listar os arquivos ignorados. `.env.example` deve continuar versionado e conter apenas campos sem credenciais reais. Isso não apaga versões antigas do histórico: se uma chave privada já foi registrada, rotacione-a no Supabase e remova-a do histórico antes de compartilhar o repositório. URL, referência e chave publishable/anon são públicas; chaves `service_role`, secret e senhas não são.
 
 ## Comandos
 
