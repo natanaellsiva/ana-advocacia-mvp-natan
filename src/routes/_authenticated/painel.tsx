@@ -55,7 +55,17 @@ function Dashboard() {
   const demands = useQuery(demandsQuery(me.officeId));
   const tasks = useQuery(tasksQuery(me.officeId));
 
-  if (demands.isLoading || tasks.isLoading) return <DashboardBody me={me} ds={[]} ts={[] />;
+  if (demands.isLoading || tasks.isLoading) {
+    return (
+      <>
+        <PageHeader
+          title={`Olá, ${me.fullName.split(" ")[0]}`}
+          description={me.isManager ? "Visão geral das demandas e da carga de trabalho do escritório." : "Suas demandas e tarefas."}
+        />
+        <LoadingBlock />
+      </>
+    );
+  }
   if (demands.error || tasks.error) {
     return (
       <EmptyState
