@@ -39,7 +39,7 @@ export function Modal({ open, onClose, title, children }: { open: boolean; onClo
       <div className="surface-card relative w-full max-w-lg p-6">
         <div className="mb-5 flex items-center justify-between gap-3">
           <h2 className="text-lg font-semibold">{title}</h2>
-          <button onClick={onClose} aria-label="Fechar" className="grid h-10 w-10 place-items-center rounded-field hover:bg-elevated">
+          <button onClick={onClose} aria-label="Fechar" className="grid h-11 w-11 place-items-center rounded-field hover:bg-elevated">
             <X className="h-5 w-5" />
           </button>
         </div>

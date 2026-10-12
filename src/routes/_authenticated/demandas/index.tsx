@@ -51,7 +51,7 @@ function DemandsPage() {
       <div className="mb-5 flex flex-wrap items-center gap-3">
         <div role="group" aria-label="Modo de visualização" className="flex rounded-full border p-1">
           {([["kanban", Columns3, "Quadro"], ["list", List, "Lista"]] as const).map(([v, Icon, label]) => (
-            <button key={v} aria-pressed={view === v} onClick={() => setView(v)} className={cn("inline-flex min-h-9 items-center gap-2 rounded-full px-4 text-sm", view === v ? "bg-accent text-primary" : "text-muted-foreground hover:text-foreground")}>
+            <button key={v} aria-pressed={view === v} onClick={() => setView(v)} className={cn("inline-flex min-h-11 items-center gap-2 rounded-full px-4 text-sm", view === v ? "bg-accent text-primary" : "text-muted-foreground hover:text-foreground")}>
               <Icon className="h-4 w-4" /> {label}
             </button>
           ))}

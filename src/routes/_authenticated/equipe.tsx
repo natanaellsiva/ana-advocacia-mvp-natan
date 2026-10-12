@@ -75,7 +75,7 @@ function TeamPage() {
                       <td className="px-5 py-3"><p className="font-medium">{m.profiles?.full_name}{self && <span className="ml-2 text-xs text-muted-foreground">(você)</span>}</p><p className="text-xs text-muted-foreground">{m.profiles?.email}</p></td>
                       <td className="px-5 py-3">
                         {me.isAdmin && !self ? (
-                          <select aria-label={`Papel de ${m.profiles?.full_name}`} className={`${fieldClass} h-9 w-40`} value={m.role} onChange={(e) => updateMember.mutate({ id: m.id, role: e.target.value as OfficeRole })}>
+                          <select aria-label={`Papel de ${m.profiles?.full_name}`} className={`${fieldClass} h-11 w-40`} value={m.role} onChange={(e) => updateMember.mutate({ id: m.id, role: e.target.value as OfficeRole })}>
                             {roles.map((r) => <option key={r} value={r}>{roleLabel[r]}</option>)}
                           </select>
                         ) : roleLabel[m.role]}
@@ -166,7 +166,7 @@ function TeamCard({ team, canEdit, members, onChange }: { team: Team; canEdit: b
         {team.team_members.map((tm) => (
           <li key={tm.id} className="flex items-center justify-between gap-2 rounded-field bg-elevated px-3 py-2 text-sm">
             {tm.profiles?.full_name ?? "—"}
-            {canEdit && <button aria-label={`Remover ${tm.profiles?.full_name}`} onClick={() => remove.mutate(tm.id)} className="grid h-8 w-8 place-items-center rounded-full text-muted-foreground hover:text-destructive"><X className="h-4 w-4" /></button>}
+            {canEdit && <button aria-label={`Remover ${tm.profiles?.full_name}`} onClick={() => remove.mutate(tm.id)} className="grid h-11 w-11 place-items-center rounded-full text-muted-foreground hover:text-destructive"><X className="h-4 w-4" /></button>}
           </li>
         ))}
         {!team.team_members.length && <li className="text-sm text-muted-foreground">Nenhum membro no time.</li>}
