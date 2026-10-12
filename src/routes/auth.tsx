@@ -3,7 +3,7 @@ import { useState, type FormEvent } from "react";
 import { AlertCircle, Loader2, Scale } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 
-type Search = { redirect?: string };
+type Search = { redirect?: string | undefined };
 
 function safeRedirect(path?: string) {
   return path && path.startsWith("/") && !path.startsWith("//") && path !== "/auth" ? path : "/painel";

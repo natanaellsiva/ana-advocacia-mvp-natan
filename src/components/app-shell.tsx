@@ -20,7 +20,7 @@ function NavLinks({ onNavigate }: { onNavigate?: () => void }) {
           key={to}
           to={to}
           onClick={onNavigate}
-          activeOptions={{ exact: to === "/" }}
+          activeOptions={{ exact: true }}
           className="flex min-h-11 items-center gap-3 rounded-field px-3 text-sm text-muted-foreground transition-colors hover:bg-elevated hover:text-foreground"
           activeProps={{ className: "bg-accent !text-primary font-medium" }}
         >
