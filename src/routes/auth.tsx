@@ -33,6 +33,8 @@ export const Route = createFileRoute("/auth")({
       { name: "description", content: "Acesse o painel de gestão de demandas do seu escritório." },
       { property: "og:title", content: "Entrar — ANA | A Nova Advocacia" },
       { property: "og:description", content: "Acesse o painel de gestão de demandas do seu escritório." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
     ],
   }),
   component: AuthPage,

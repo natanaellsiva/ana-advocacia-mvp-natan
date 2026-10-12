@@ -15,3 +15,4 @@
 - Database security is enforced by RLS (see `supabase/phase2_schema.sql`); hiding things in the interface is only for convenience. Why: hiding buttons doesn't stop anyone from calling the database directly.
 - Pages read and write Supabase directly from the browser (RLS + workflow RPCs enforce the rules); the only server function is adding office members, because creating accounts needs the service key. Why: a single security layer, with no duplicated permission checks.
 - Shared data queries, labels and error translations live in `src/lib/domain.ts`. Why: one source for cache keys and Portuguese messages.
+- Delivery documentation lives in README.md and docs/; distinguish implemented behavior, user-reported checks and independently verified results. Why: challenge deliverables must not overstate readiness.

@@ -19,6 +19,8 @@ export const Route = createFileRoute("/_authenticated/demandas/")({
       { name: "description", content: "Gestão de demandas jurídicas do escritório." },
       { property: "og:title", content: "Demandas — ANA" },
       { property: "og:description", content: "Gestão de demandas jurídicas do escritório." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
     ],
   }),
   component: () => (
