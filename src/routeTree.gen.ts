@@ -13,9 +13,9 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as AuthenticatedClientesRouteImport } from './routes/_authenticated/clientes'
-import { Route as AuthenticatedDemandasRouteImport } from './routes/_authenticated/demandas'
 import { Route as AuthenticatedEquipeRouteImport } from './routes/_authenticated/equipe'
 import { Route as AuthenticatedPainelRouteImport } from './routes/_authenticated/painel'
+import { Route as AuthenticatedDemandasIndexRouteImport } from './routes/_authenticated/demandas/index'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -36,11 +36,6 @@ const AuthenticatedClientesRoute = AuthenticatedClientesRouteImport.update({
   path: '/clientes',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
-const AuthenticatedDemandasRoute = AuthenticatedDemandasRouteImport.update({
-  id: '/demandas',
-  path: '/demandas',
-  getParentRoute: () => AuthenticatedRouteRoute,
-} as any)
 const AuthenticatedEquipeRoute = AuthenticatedEquipeRouteImport.update({
   id: '/equipe',
   path: '/equipe',
@@ -51,22 +46,28 @@ const AuthenticatedPainelRoute = AuthenticatedPainelRouteImport.update({
   path: '/painel',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
+const AuthenticatedDemandasIndexRoute =
+  AuthenticatedDemandasIndexRouteImport.update({
+    id: '/demandas/',
+    path: '/demandas/',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
   '/clientes': typeof AuthenticatedClientesRoute
-  '/demandas': typeof AuthenticatedDemandasRoute
   '/equipe': typeof AuthenticatedEquipeRoute
   '/painel': typeof AuthenticatedPainelRoute
+  '/demandas/': typeof AuthenticatedDemandasIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
   '/clientes': typeof AuthenticatedClientesRoute
-  '/demandas': typeof AuthenticatedDemandasRoute
   '/equipe': typeof AuthenticatedEquipeRoute
   '/painel': typeof AuthenticatedPainelRoute
+  '/demandas': typeof AuthenticatedDemandasIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -74,24 +75,24 @@ export interface FileRoutesById {
   '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
   '/auth': typeof AuthRoute
   '/_authenticated/clientes': typeof AuthenticatedClientesRoute
-  '/_authenticated/demandas': typeof AuthenticatedDemandasRoute
   '/_authenticated/equipe': typeof AuthenticatedEquipeRoute
   '/_authenticated/painel': typeof AuthenticatedPainelRoute
+  '/_authenticated/demandas/': typeof AuthenticatedDemandasIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/auth' | '/clientes' | '/demandas' | '/equipe' | '/painel'
+  fullPaths: '/' | '/auth' | '/clientes' | '/equipe' | '/painel' | '/demandas/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/auth' | '/clientes' | '/demandas' | '/equipe' | '/painel'
+  to: '/' | '/auth' | '/clientes' | '/equipe' | '/painel' | '/demandas'
   id:
     | '__root__'
     | '/'
     | '/_authenticated'
     | '/auth'
     | '/_authenticated/clientes'
-    | '/_authenticated/demandas'
     | '/_authenticated/equipe'
     | '/_authenticated/painel'
+    | '/_authenticated/demandas/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -130,13 +131,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedClientesRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
-    '/_authenticated/demandas': {
-      id: '/_authenticated/demandas'
-      path: '/demandas'
-      fullPath: '/demandas'
-      preLoaderRoute: typeof AuthenticatedDemandasRouteImport
-      parentRoute: typeof AuthenticatedRouteRoute
-    }
     '/_authenticated/equipe': {
       id: '/_authenticated/equipe'
       path: '/equipe'
@@ -151,21 +145,28 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedPainelRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/demandas/': {
+      id: '/_authenticated/demandas/'
+      path: '/demandas'
+      fullPath: '/demandas/'
+      preLoaderRoute: typeof AuthenticatedDemandasIndexRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
   }
 }
 
 interface AuthenticatedRouteRouteChildren {
   AuthenticatedClientesRoute: typeof AuthenticatedClientesRoute
-  AuthenticatedDemandasRoute: typeof AuthenticatedDemandasRoute
   AuthenticatedEquipeRoute: typeof AuthenticatedEquipeRoute
   AuthenticatedPainelRoute: typeof AuthenticatedPainelRoute
+  AuthenticatedDemandasIndexRoute: typeof AuthenticatedDemandasIndexRoute
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedClientesRoute: AuthenticatedClientesRoute,
-  AuthenticatedDemandasRoute: AuthenticatedDemandasRoute,
   AuthenticatedEquipeRoute: AuthenticatedEquipeRoute,
   AuthenticatedPainelRoute: AuthenticatedPainelRoute,
+  AuthenticatedDemandasIndexRoute: AuthenticatedDemandasIndexRoute,
 }
 
 const AuthenticatedRouteRouteWithChildren =
