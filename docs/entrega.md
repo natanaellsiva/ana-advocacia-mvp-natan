@@ -29,6 +29,8 @@ A demanda recebe responsável na criação; o roteiro não deve sugerir uma tela
 
 ## Evidências de teste a registrar
 
+Verificações desta preparação: dois testes Vitest aprovados; compilação automática sem erros; `/painel` sem sessão redirecionou para `/auth`; idioma do documento `pt-BR`; página 404 em português. O selo Pendente foi inspecionado isoladamente com as classes e cores reais da aplicação: contraste do texto **17,33:1** e da borda sobre a superfície elevada **6,31:1**, superiores aos limiares WCAG AA de 4,5:1 para texto pequeno e 3:1 para contraste não textual. Isso verifica o selo, não certifica a acessibilidade de toda a aplicação nem o painel autenticado.
+
 | Caso | Resultado esperado | Estado desta entrega |
 |---|---|---|
 | Abrir `/painel` sem sessão | Redirecionar a `/auth` | Verificação pública possível; não valida login bem-sucedido |
